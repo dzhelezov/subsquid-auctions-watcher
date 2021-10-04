@@ -1,0 +1,41 @@
+version: '3.0'
+description: Test manifest
+repository: https://github.com/
+hydraVersion: "4"
+
+typegen:
+  metadata:
+    source: wss://kusama.api.onfinality.io/public-ws
+  events:
+    - auctions.AuctionStarted
+    - auctions.AuctionClosed
+    - auctions.Reserved
+    - auctions.Unreserved
+    - auctions.ReserveConfiscated
+    - auctions.BidAccepted
+    - auctions.WinningOffset
+    - crowdloan.Created
+    - crowdloan.Contributed
+    - crowdloan.Withdrew
+    - crowdloan.Dissolved
+    - crowdloan.HandleBidResult
+    - crowdloan.AddedToNewRaise
+    - slots.Leased
+    - slots.NewLeasePeriod
+    - registrar.Registered
+  outDir: chain
+
+mappings:
+  mappingsModule: mappings
+  eventHandlers:
+    - event: auctions.AuctionStarted
+      handler: handleAuctionStarted
+    - event: auctions.BidAccepted
+      handler: auctionBidAccepted
+    - event: crowdloan.HandleBidResult
+      handler: handleBidResult
+    - event: slots.NewLeasePeriod
+      handler: newLeasePeriod
+  extrinsicHandlers:
+  preBlockHooks:
+  postBlockHooks:

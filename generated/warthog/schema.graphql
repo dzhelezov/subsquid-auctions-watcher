@@ -1,0 +1,1502 @@
+type Auction implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  blockNum: Int!
+  status: String!
+  bids: [Bid!]!
+  leaseStart: Int
+  slotsStart: Int!
+  leaseEnd: Int
+  slotsEnd: Int!
+  closingStart: Int!
+  closingEnd: Int!
+  resultBlock: Int
+  ongoing: Boolean!
+  parachainLeases: [ParachainLeases!]
+  auctionparachainauction: [AuctionParachain!]
+  chroniclecurAuction: [Chronicle!]
+}
+
+type AuctionConnection {
+  totalCount: Int!
+  edges: [AuctionEdge!]!
+  pageInfo: PageInfo!
+}
+
+input AuctionCreateInput {
+  blockNum: Float!
+  status: String!
+  leaseStart: Float
+  slotsStart: Float!
+  leaseEnd: Float
+  slotsEnd: Float!
+  closingStart: Float!
+  closingEnd: Float!
+  resultBlock: Float
+  ongoing: Boolean!
+}
+
+type AuctionEdge {
+  node: Auction!
+  cursor: String!
+}
+
+enum AuctionOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  blockNum_ASC
+  blockNum_DESC
+  status_ASC
+  status_DESC
+  leaseStart_ASC
+  leaseStart_DESC
+  slotsStart_ASC
+  slotsStart_DESC
+  leaseEnd_ASC
+  leaseEnd_DESC
+  slotsEnd_ASC
+  slotsEnd_DESC
+  closingStart_ASC
+  closingStart_DESC
+  closingEnd_ASC
+  closingEnd_DESC
+  resultBlock_ASC
+  resultBlock_DESC
+  ongoing_ASC
+  ongoing_DESC
+}
+
+type AuctionParachain implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  auction: Auction!
+  auctionId: String!
+  parachain: Parachain!
+  parachainId: String!
+  blockNum: Int!
+  firstSlot: Int!
+  lastSlot: Int!
+}
+
+type AuctionParachainConnection {
+  totalCount: Int!
+  edges: [AuctionParachainEdge!]!
+  pageInfo: PageInfo!
+}
+
+input AuctionParachainCreateInput {
+  auction: ID!
+  parachain: ID!
+  blockNum: Float!
+  firstSlot: Float!
+  lastSlot: Float!
+}
+
+type AuctionParachainEdge {
+  node: AuctionParachain!
+  cursor: String!
+}
+
+enum AuctionParachainOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  auction_ASC
+  auction_DESC
+  parachain_ASC
+  parachain_DESC
+  blockNum_ASC
+  blockNum_DESC
+  firstSlot_ASC
+  firstSlot_DESC
+  lastSlot_ASC
+  lastSlot_DESC
+}
+
+input AuctionParachainUpdateInput {
+  auction: ID
+  parachain: ID
+  blockNum: Float
+  firstSlot: Float
+  lastSlot: Float
+}
+
+input AuctionParachainWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  blockNum_eq: Int
+  blockNum_gt: Int
+  blockNum_gte: Int
+  blockNum_lt: Int
+  blockNum_lte: Int
+  blockNum_in: [Int!]
+  firstSlot_eq: Int
+  firstSlot_gt: Int
+  firstSlot_gte: Int
+  firstSlot_lt: Int
+  firstSlot_lte: Int
+  firstSlot_in: [Int!]
+  lastSlot_eq: Int
+  lastSlot_gt: Int
+  lastSlot_gte: Int
+  lastSlot_lt: Int
+  lastSlot_lte: Int
+  lastSlot_in: [Int!]
+  auction: AuctionWhereInput
+  parachain: ParachainWhereInput
+  AND: [AuctionParachainWhereInput!]
+  OR: [AuctionParachainWhereInput!]
+}
+
+input AuctionParachainWhereUniqueInput {
+  id: ID!
+}
+
+input AuctionUpdateInput {
+  blockNum: Float
+  status: String
+  leaseStart: Float
+  slotsStart: Float
+  leaseEnd: Float
+  slotsEnd: Float
+  closingStart: Float
+  closingEnd: Float
+  resultBlock: Float
+  ongoing: Boolean
+}
+
+input AuctionWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  blockNum_eq: Int
+  blockNum_gt: Int
+  blockNum_gte: Int
+  blockNum_lt: Int
+  blockNum_lte: Int
+  blockNum_in: [Int!]
+  status_eq: String
+  status_contains: String
+  status_startsWith: String
+  status_endsWith: String
+  status_in: [String!]
+  leaseStart_eq: Int
+  leaseStart_gt: Int
+  leaseStart_gte: Int
+  leaseStart_lt: Int
+  leaseStart_lte: Int
+  leaseStart_in: [Int!]
+  slotsStart_eq: Int
+  slotsStart_gt: Int
+  slotsStart_gte: Int
+  slotsStart_lt: Int
+  slotsStart_lte: Int
+  slotsStart_in: [Int!]
+  leaseEnd_eq: Int
+  leaseEnd_gt: Int
+  leaseEnd_gte: Int
+  leaseEnd_lt: Int
+  leaseEnd_lte: Int
+  leaseEnd_in: [Int!]
+  slotsEnd_eq: Int
+  slotsEnd_gt: Int
+  slotsEnd_gte: Int
+  slotsEnd_lt: Int
+  slotsEnd_lte: Int
+  slotsEnd_in: [Int!]
+  closingStart_eq: Int
+  closingStart_gt: Int
+  closingStart_gte: Int
+  closingStart_lt: Int
+  closingStart_lte: Int
+  closingStart_in: [Int!]
+  closingEnd_eq: Int
+  closingEnd_gt: Int
+  closingEnd_gte: Int
+  closingEnd_lt: Int
+  closingEnd_lte: Int
+  closingEnd_in: [Int!]
+  resultBlock_eq: Int
+  resultBlock_gt: Int
+  resultBlock_gte: Int
+  resultBlock_lt: Int
+  resultBlock_lte: Int
+  resultBlock_in: [Int!]
+  ongoing_eq: Boolean
+  ongoing_in: [Boolean!]
+  bids_none: BidWhereInput
+  bids_some: BidWhereInput
+  bids_every: BidWhereInput
+  parachainLeases_none: ParachainLeasesWhereInput
+  parachainLeases_some: ParachainLeasesWhereInput
+  parachainLeases_every: ParachainLeasesWhereInput
+  auctionparachainauction_none: AuctionParachainWhereInput
+  auctionparachainauction_some: AuctionParachainWhereInput
+  auctionparachainauction_every: AuctionParachainWhereInput
+  chroniclecurAuction_none: ChronicleWhereInput
+  chroniclecurAuction_some: ChronicleWhereInput
+  chroniclecurAuction_every: ChronicleWhereInput
+  AND: [AuctionWhereInput!]
+  OR: [AuctionWhereInput!]
+}
+
+input AuctionWhereUniqueInput {
+  id: ID!
+}
+
+interface BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type BaseModel implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+type BaseModelUUID implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+}
+
+input BaseWhereInput {
+  id_eq: String
+  id_in: [String!]
+  createdAt_eq: String
+  createdAt_lt: String
+  createdAt_lte: String
+  createdAt_gt: String
+  createdAt_gte: String
+  createdById_eq: String
+  updatedAt_eq: String
+  updatedAt_lt: String
+  updatedAt_lte: String
+  updatedAt_gt: String
+  updatedAt_gte: String
+  updatedById_eq: String
+  deletedAt_all: Boolean
+  deletedAt_eq: String
+  deletedAt_lt: String
+  deletedAt_lte: String
+  deletedAt_gt: String
+  deletedAt_gte: String
+  deletedById_eq: String
+}
+
+type Bid implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  auction: Auction!
+  auctionId: String!
+  winningAuction: Int
+  blockNum: Int!
+  parachain: Parachain!
+  parachainId: String!
+  isCrowdloan: Boolean!
+  amount: BigInt!
+  fund: Crowdloan
+  fundId: String
+  firstSlot: Int!
+  lastSlot: Int!
+  bidder: String
+}
+
+type BidConnection {
+  totalCount: Int!
+  edges: [BidEdge!]!
+  pageInfo: PageInfo!
+}
+
+input BidCreateInput {
+  auction: ID!
+  winningAuction: Float
+  blockNum: Float!
+  parachain: ID!
+  isCrowdloan: Boolean!
+  amount: String!
+  fund: ID
+  firstSlot: Float!
+  lastSlot: Float!
+  bidder: String
+}
+
+type BidEdge {
+  node: Bid!
+  cursor: String!
+}
+
+enum BidOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  auction_ASC
+  auction_DESC
+  winningAuction_ASC
+  winningAuction_DESC
+  blockNum_ASC
+  blockNum_DESC
+  parachain_ASC
+  parachain_DESC
+  isCrowdloan_ASC
+  isCrowdloan_DESC
+  amount_ASC
+  amount_DESC
+  fund_ASC
+  fund_DESC
+  firstSlot_ASC
+  firstSlot_DESC
+  lastSlot_ASC
+  lastSlot_DESC
+  bidder_ASC
+  bidder_DESC
+}
+
+input BidUpdateInput {
+  auction: ID
+  winningAuction: Float
+  blockNum: Float
+  parachain: ID
+  isCrowdloan: Boolean
+  amount: String
+  fund: ID
+  firstSlot: Float
+  lastSlot: Float
+  bidder: String
+}
+
+input BidWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  winningAuction_eq: Int
+  winningAuction_gt: Int
+  winningAuction_gte: Int
+  winningAuction_lt: Int
+  winningAuction_lte: Int
+  winningAuction_in: [Int!]
+  blockNum_eq: Int
+  blockNum_gt: Int
+  blockNum_gte: Int
+  blockNum_lt: Int
+  blockNum_lte: Int
+  blockNum_in: [Int!]
+  isCrowdloan_eq: Boolean
+  isCrowdloan_in: [Boolean!]
+  amount_eq: BigInt
+  amount_gt: BigInt
+  amount_gte: BigInt
+  amount_lt: BigInt
+  amount_lte: BigInt
+  amount_in: [BigInt!]
+  firstSlot_eq: Int
+  firstSlot_gt: Int
+  firstSlot_gte: Int
+  firstSlot_lt: Int
+  firstSlot_lte: Int
+  firstSlot_in: [Int!]
+  lastSlot_eq: Int
+  lastSlot_gt: Int
+  lastSlot_gte: Int
+  lastSlot_lt: Int
+  lastSlot_lte: Int
+  lastSlot_in: [Int!]
+  bidder_eq: String
+  bidder_contains: String
+  bidder_startsWith: String
+  bidder_endsWith: String
+  bidder_in: [String!]
+  auction: AuctionWhereInput
+  parachain: ParachainWhereInput
+  fund: CrowdloanWhereInput
+  AND: [BidWhereInput!]
+  OR: [BidWhereInput!]
+}
+
+input BidWhereUniqueInput {
+  id: ID!
+}
+
+"""GraphQL representation of BigInt"""
+scalar BigInt
+
+type Chronicle implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  curAuction: Auction
+  curAuctionId: String
+  curBlockNum: Int
+  curLease: Int
+  curLeaseStart: Int
+  curLeaseEnd: Int
+  parachains: [Parachain!]
+}
+
+type ChronicleConnection {
+  totalCount: Int!
+  edges: [ChronicleEdge!]!
+  pageInfo: PageInfo!
+}
+
+input ChronicleCreateInput {
+  curAuction: ID
+  curBlockNum: Float
+  curLease: Float
+  curLeaseStart: Float
+  curLeaseEnd: Float
+}
+
+type ChronicleEdge {
+  node: Chronicle!
+  cursor: String!
+}
+
+enum ChronicleOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  curAuction_ASC
+  curAuction_DESC
+  curBlockNum_ASC
+  curBlockNum_DESC
+  curLease_ASC
+  curLease_DESC
+  curLeaseStart_ASC
+  curLeaseStart_DESC
+  curLeaseEnd_ASC
+  curLeaseEnd_DESC
+}
+
+input ChronicleUpdateInput {
+  curAuction: ID
+  curBlockNum: Float
+  curLease: Float
+  curLeaseStart: Float
+  curLeaseEnd: Float
+}
+
+input ChronicleWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  curBlockNum_eq: Int
+  curBlockNum_gt: Int
+  curBlockNum_gte: Int
+  curBlockNum_lt: Int
+  curBlockNum_lte: Int
+  curBlockNum_in: [Int!]
+  curLease_eq: Int
+  curLease_gt: Int
+  curLease_gte: Int
+  curLease_lt: Int
+  curLease_lte: Int
+  curLease_in: [Int!]
+  curLeaseStart_eq: Int
+  curLeaseStart_gt: Int
+  curLeaseStart_gte: Int
+  curLeaseStart_lt: Int
+  curLeaseStart_lte: Int
+  curLeaseStart_in: [Int!]
+  curLeaseEnd_eq: Int
+  curLeaseEnd_gt: Int
+  curLeaseEnd_gte: Int
+  curLeaseEnd_lt: Int
+  curLeaseEnd_lte: Int
+  curLeaseEnd_in: [Int!]
+  curAuction: AuctionWhereInput
+  parachains_none: ParachainWhereInput
+  parachains_some: ParachainWhereInput
+  parachains_every: ParachainWhereInput
+  AND: [ChronicleWhereInput!]
+  OR: [ChronicleWhereInput!]
+}
+
+input ChronicleWhereUniqueInput {
+  id: ID!
+}
+
+type Contribution implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  account: String!
+  parachain: Parachain!
+  parachainId: String!
+  fund: Crowdloan!
+  fundId: String!
+  amount: BigInt!
+  blockNum: Int!
+}
+
+type ContributionConnection {
+  totalCount: Int!
+  edges: [ContributionEdge!]!
+  pageInfo: PageInfo!
+}
+
+input ContributionCreateInput {
+  account: String!
+  parachain: ID!
+  fund: ID!
+  amount: String!
+  blockNum: Float!
+}
+
+type ContributionEdge {
+  node: Contribution!
+  cursor: String!
+}
+
+enum ContributionOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  account_ASC
+  account_DESC
+  parachain_ASC
+  parachain_DESC
+  fund_ASC
+  fund_DESC
+  amount_ASC
+  amount_DESC
+  blockNum_ASC
+  blockNum_DESC
+}
+
+input ContributionUpdateInput {
+  account: String
+  parachain: ID
+  fund: ID
+  amount: String
+  blockNum: Float
+}
+
+input ContributionWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  account_eq: String
+  account_contains: String
+  account_startsWith: String
+  account_endsWith: String
+  account_in: [String!]
+  amount_eq: BigInt
+  amount_gt: BigInt
+  amount_gte: BigInt
+  amount_lt: BigInt
+  amount_lte: BigInt
+  amount_in: [BigInt!]
+  blockNum_eq: Int
+  blockNum_gt: Int
+  blockNum_gte: Int
+  blockNum_lt: Int
+  blockNum_lte: Int
+  blockNum_in: [Int!]
+  parachain: ParachainWhereInput
+  fund: CrowdloanWhereInput
+  AND: [ContributionWhereInput!]
+  OR: [ContributionWhereInput!]
+}
+
+input ContributionWhereUniqueInput {
+  id: ID!
+}
+
+type Crowdloan implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  parachain: Parachain!
+  parachainId: String!
+  depositor: String!
+  verifier: String
+  cap: BigInt!
+  raised: BigInt!
+  lockExpiredBlock: Int!
+  blockNum: Int
+  firstSlot: Int!
+  lastSlot: Int!
+  status: String!
+  leaseExpiredBlock: Int
+  dissolvedBlock: Int
+  isFinished: Boolean
+  wonAuctionId: String
+  contributions: [Contribution!]
+  bidfund: [Bid!]
+}
+
+type CrowdloanConnection {
+  totalCount: Int!
+  edges: [CrowdloanEdge!]!
+  pageInfo: PageInfo!
+}
+
+input CrowdloanCreateInput {
+  updatedAt: DateTime
+  parachain: ID!
+  depositor: String!
+  verifier: String
+  cap: String!
+  raised: String!
+  lockExpiredBlock: Float!
+  blockNum: Float
+  firstSlot: Float!
+  lastSlot: Float!
+  status: String!
+  leaseExpiredBlock: Float
+  dissolvedBlock: Float
+  isFinished: Boolean
+  wonAuctionId: String
+}
+
+type CrowdloanEdge {
+  node: Crowdloan!
+  cursor: String!
+}
+
+enum CrowdloanOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  parachain_ASC
+  parachain_DESC
+  depositor_ASC
+  depositor_DESC
+  verifier_ASC
+  verifier_DESC
+  cap_ASC
+  cap_DESC
+  raised_ASC
+  raised_DESC
+  lockExpiredBlock_ASC
+  lockExpiredBlock_DESC
+  blockNum_ASC
+  blockNum_DESC
+  firstSlot_ASC
+  firstSlot_DESC
+  lastSlot_ASC
+  lastSlot_DESC
+  status_ASC
+  status_DESC
+  leaseExpiredBlock_ASC
+  leaseExpiredBlock_DESC
+  dissolvedBlock_ASC
+  dissolvedBlock_DESC
+  isFinished_ASC
+  isFinished_DESC
+  wonAuctionId_ASC
+  wonAuctionId_DESC
+}
+
+type CrowdloanSequence implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  curIndex: Int!
+  blockNum: Int!
+}
+
+type CrowdloanSequenceConnection {
+  totalCount: Int!
+  edges: [CrowdloanSequenceEdge!]!
+  pageInfo: PageInfo!
+}
+
+input CrowdloanSequenceCreateInput {
+  curIndex: Float!
+  blockNum: Float!
+}
+
+type CrowdloanSequenceEdge {
+  node: CrowdloanSequence!
+  cursor: String!
+}
+
+enum CrowdloanSequenceOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  curIndex_ASC
+  curIndex_DESC
+  blockNum_ASC
+  blockNum_DESC
+}
+
+input CrowdloanSequenceUpdateInput {
+  curIndex: Float
+  blockNum: Float
+}
+
+input CrowdloanSequenceWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  curIndex_eq: Int
+  curIndex_gt: Int
+  curIndex_gte: Int
+  curIndex_lt: Int
+  curIndex_lte: Int
+  curIndex_in: [Int!]
+  blockNum_eq: Int
+  blockNum_gt: Int
+  blockNum_gte: Int
+  blockNum_lt: Int
+  blockNum_lte: Int
+  blockNum_in: [Int!]
+  AND: [CrowdloanSequenceWhereInput!]
+  OR: [CrowdloanSequenceWhereInput!]
+}
+
+input CrowdloanSequenceWhereUniqueInput {
+  id: ID!
+}
+
+input CrowdloanUpdateInput {
+  updatedAt: DateTime
+  parachain: ID
+  depositor: String
+  verifier: String
+  cap: String
+  raised: String
+  lockExpiredBlock: Float
+  blockNum: Float
+  firstSlot: Float
+  lastSlot: Float
+  status: String
+  leaseExpiredBlock: Float
+  dissolvedBlock: Float
+  isFinished: Boolean
+  wonAuctionId: String
+}
+
+input CrowdloanWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  depositor_eq: String
+  depositor_contains: String
+  depositor_startsWith: String
+  depositor_endsWith: String
+  depositor_in: [String!]
+  verifier_eq: String
+  verifier_contains: String
+  verifier_startsWith: String
+  verifier_endsWith: String
+  verifier_in: [String!]
+  cap_eq: BigInt
+  cap_gt: BigInt
+  cap_gte: BigInt
+  cap_lt: BigInt
+  cap_lte: BigInt
+  cap_in: [BigInt!]
+  raised_eq: BigInt
+  raised_gt: BigInt
+  raised_gte: BigInt
+  raised_lt: BigInt
+  raised_lte: BigInt
+  raised_in: [BigInt!]
+  lockExpiredBlock_eq: Int
+  lockExpiredBlock_gt: Int
+  lockExpiredBlock_gte: Int
+  lockExpiredBlock_lt: Int
+  lockExpiredBlock_lte: Int
+  lockExpiredBlock_in: [Int!]
+  blockNum_eq: Int
+  blockNum_gt: Int
+  blockNum_gte: Int
+  blockNum_lt: Int
+  blockNum_lte: Int
+  blockNum_in: [Int!]
+  firstSlot_eq: Int
+  firstSlot_gt: Int
+  firstSlot_gte: Int
+  firstSlot_lt: Int
+  firstSlot_lte: Int
+  firstSlot_in: [Int!]
+  lastSlot_eq: Int
+  lastSlot_gt: Int
+  lastSlot_gte: Int
+  lastSlot_lt: Int
+  lastSlot_lte: Int
+  lastSlot_in: [Int!]
+  status_eq: String
+  status_contains: String
+  status_startsWith: String
+  status_endsWith: String
+  status_in: [String!]
+  leaseExpiredBlock_eq: Int
+  leaseExpiredBlock_gt: Int
+  leaseExpiredBlock_gte: Int
+  leaseExpiredBlock_lt: Int
+  leaseExpiredBlock_lte: Int
+  leaseExpiredBlock_in: [Int!]
+  dissolvedBlock_eq: Int
+  dissolvedBlock_gt: Int
+  dissolvedBlock_gte: Int
+  dissolvedBlock_lt: Int
+  dissolvedBlock_lte: Int
+  dissolvedBlock_in: [Int!]
+  isFinished_eq: Boolean
+  isFinished_in: [Boolean!]
+  wonAuctionId_eq: String
+  wonAuctionId_contains: String
+  wonAuctionId_startsWith: String
+  wonAuctionId_endsWith: String
+  wonAuctionId_in: [String!]
+  parachain: ParachainWhereInput
+  contributions_none: ContributionWhereInput
+  contributions_some: ContributionWhereInput
+  contributions_every: ContributionWhereInput
+  bidfund_none: BidWhereInput
+  bidfund_some: BidWhereInput
+  bidfund_every: BidWhereInput
+  AND: [CrowdloanWhereInput!]
+  OR: [CrowdloanWhereInput!]
+}
+
+input CrowdloanWhereUniqueInput {
+  id: ID!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+interface DeleteResponse {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Parachain implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  paraId: Int!
+  creationBlock: Int
+  deregistered: Boolean!
+  deposit: BigInt!
+  manager: String!
+  leases: [ParachainLeases!]
+  bids: [Bid!]
+  funds: [Crowdloan!]
+  chronicle: Chronicle
+  chronicleId: String
+  auctionparachainparachain: [AuctionParachain!]
+  contributionparachain: [Contribution!]
+}
+
+type ParachainConnection {
+  totalCount: Int!
+  edges: [ParachainEdge!]!
+  pageInfo: PageInfo!
+}
+
+input ParachainCreateInput {
+  paraId: Float!
+  creationBlock: Float
+  deregistered: Boolean!
+  deposit: String!
+  manager: String!
+  chronicle: ID
+}
+
+type ParachainEdge {
+  node: Parachain!
+  cursor: String!
+}
+
+type ParachainLeases implements BaseGraphQLObject {
+  id: ID!
+  createdAt: DateTime!
+  createdById: String!
+  updatedAt: DateTime
+  updatedById: String
+  deletedAt: DateTime
+  deletedById: String
+  version: Int!
+  paraId: Int!
+  parachain: Parachain!
+  parachainId: String!
+  leaseRange: String!
+  firstLease: Int!
+  lastLease: Int!
+  latestBidAmount: BigInt!
+  auction: Auction
+  auctionId: String
+  activeForAuction: String
+  winningAmount: BigInt
+  extraAmount: BigInt
+  wonBidFrom: String
+  numBlockWon: Int
+  winningResultBlock: Int
+  hasWon: Boolean!
+}
+
+type ParachainLeasesConnection {
+  totalCount: Int!
+  edges: [ParachainLeasesEdge!]!
+  pageInfo: PageInfo!
+}
+
+input ParachainLeasesCreateInput {
+  paraId: Float!
+  parachain: ID!
+  leaseRange: String!
+  firstLease: Float!
+  lastLease: Float!
+  latestBidAmount: String!
+  auction: ID
+  activeForAuction: String
+  winningAmount: String
+  extraAmount: String
+  wonBidFrom: String
+  numBlockWon: Float
+  winningResultBlock: Float
+  hasWon: Boolean!
+}
+
+type ParachainLeasesEdge {
+  node: ParachainLeases!
+  cursor: String!
+}
+
+enum ParachainLeasesOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  paraId_ASC
+  paraId_DESC
+  parachain_ASC
+  parachain_DESC
+  leaseRange_ASC
+  leaseRange_DESC
+  firstLease_ASC
+  firstLease_DESC
+  lastLease_ASC
+  lastLease_DESC
+  latestBidAmount_ASC
+  latestBidAmount_DESC
+  auction_ASC
+  auction_DESC
+  activeForAuction_ASC
+  activeForAuction_DESC
+  winningAmount_ASC
+  winningAmount_DESC
+  extraAmount_ASC
+  extraAmount_DESC
+  wonBidFrom_ASC
+  wonBidFrom_DESC
+  numBlockWon_ASC
+  numBlockWon_DESC
+  winningResultBlock_ASC
+  winningResultBlock_DESC
+  hasWon_ASC
+  hasWon_DESC
+}
+
+input ParachainLeasesUpdateInput {
+  paraId: Float
+  parachain: ID
+  leaseRange: String
+  firstLease: Float
+  lastLease: Float
+  latestBidAmount: String
+  auction: ID
+  activeForAuction: String
+  winningAmount: String
+  extraAmount: String
+  wonBidFrom: String
+  numBlockWon: Float
+  winningResultBlock: Float
+  hasWon: Boolean
+}
+
+input ParachainLeasesWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  paraId_eq: Int
+  paraId_gt: Int
+  paraId_gte: Int
+  paraId_lt: Int
+  paraId_lte: Int
+  paraId_in: [Int!]
+  leaseRange_eq: String
+  leaseRange_contains: String
+  leaseRange_startsWith: String
+  leaseRange_endsWith: String
+  leaseRange_in: [String!]
+  firstLease_eq: Int
+  firstLease_gt: Int
+  firstLease_gte: Int
+  firstLease_lt: Int
+  firstLease_lte: Int
+  firstLease_in: [Int!]
+  lastLease_eq: Int
+  lastLease_gt: Int
+  lastLease_gte: Int
+  lastLease_lt: Int
+  lastLease_lte: Int
+  lastLease_in: [Int!]
+  latestBidAmount_eq: BigInt
+  latestBidAmount_gt: BigInt
+  latestBidAmount_gte: BigInt
+  latestBidAmount_lt: BigInt
+  latestBidAmount_lte: BigInt
+  latestBidAmount_in: [BigInt!]
+  activeForAuction_eq: String
+  activeForAuction_contains: String
+  activeForAuction_startsWith: String
+  activeForAuction_endsWith: String
+  activeForAuction_in: [String!]
+  winningAmount_eq: BigInt
+  winningAmount_gt: BigInt
+  winningAmount_gte: BigInt
+  winningAmount_lt: BigInt
+  winningAmount_lte: BigInt
+  winningAmount_in: [BigInt!]
+  extraAmount_eq: BigInt
+  extraAmount_gt: BigInt
+  extraAmount_gte: BigInt
+  extraAmount_lt: BigInt
+  extraAmount_lte: BigInt
+  extraAmount_in: [BigInt!]
+  wonBidFrom_eq: String
+  wonBidFrom_contains: String
+  wonBidFrom_startsWith: String
+  wonBidFrom_endsWith: String
+  wonBidFrom_in: [String!]
+  numBlockWon_eq: Int
+  numBlockWon_gt: Int
+  numBlockWon_gte: Int
+  numBlockWon_lt: Int
+  numBlockWon_lte: Int
+  numBlockWon_in: [Int!]
+  winningResultBlock_eq: Int
+  winningResultBlock_gt: Int
+  winningResultBlock_gte: Int
+  winningResultBlock_lt: Int
+  winningResultBlock_lte: Int
+  winningResultBlock_in: [Int!]
+  hasWon_eq: Boolean
+  hasWon_in: [Boolean!]
+  parachain: ParachainWhereInput
+  auction: AuctionWhereInput
+  AND: [ParachainLeasesWhereInput!]
+  OR: [ParachainLeasesWhereInput!]
+}
+
+input ParachainLeasesWhereUniqueInput {
+  id: ID!
+}
+
+enum ParachainOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  deletedAt_ASC
+  deletedAt_DESC
+  paraId_ASC
+  paraId_DESC
+  creationBlock_ASC
+  creationBlock_DESC
+  deregistered_ASC
+  deregistered_DESC
+  deposit_ASC
+  deposit_DESC
+  manager_ASC
+  manager_DESC
+  chronicle_ASC
+  chronicle_DESC
+}
+
+input ParachainUpdateInput {
+  paraId: Float
+  creationBlock: Float
+  deregistered: Boolean
+  deposit: String
+  manager: String
+  chronicle: ID
+}
+
+input ParachainWhereInput {
+  id_eq: ID
+  id_in: [ID!]
+  createdAt_eq: DateTime
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdById_eq: ID
+  createdById_in: [ID!]
+  updatedAt_eq: DateTime
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedById_eq: ID
+  updatedById_in: [ID!]
+  deletedAt_all: Boolean
+  deletedAt_eq: DateTime
+  deletedAt_lt: DateTime
+  deletedAt_lte: DateTime
+  deletedAt_gt: DateTime
+  deletedAt_gte: DateTime
+  deletedById_eq: ID
+  deletedById_in: [ID!]
+  paraId_eq: Int
+  paraId_gt: Int
+  paraId_gte: Int
+  paraId_lt: Int
+  paraId_lte: Int
+  paraId_in: [Int!]
+  creationBlock_eq: Int
+  creationBlock_gt: Int
+  creationBlock_gte: Int
+  creationBlock_lt: Int
+  creationBlock_lte: Int
+  creationBlock_in: [Int!]
+  deregistered_eq: Boolean
+  deregistered_in: [Boolean!]
+  deposit_eq: BigInt
+  deposit_gt: BigInt
+  deposit_gte: BigInt
+  deposit_lt: BigInt
+  deposit_lte: BigInt
+  deposit_in: [BigInt!]
+  manager_eq: String
+  manager_contains: String
+  manager_startsWith: String
+  manager_endsWith: String
+  manager_in: [String!]
+  leases_none: ParachainLeasesWhereInput
+  leases_some: ParachainLeasesWhereInput
+  leases_every: ParachainLeasesWhereInput
+  bids_none: BidWhereInput
+  bids_some: BidWhereInput
+  bids_every: BidWhereInput
+  funds_none: CrowdloanWhereInput
+  funds_some: CrowdloanWhereInput
+  funds_every: CrowdloanWhereInput
+  chronicle: ChronicleWhereInput
+  auctionparachainparachain_none: AuctionParachainWhereInput
+  auctionparachainparachain_some: AuctionParachainWhereInput
+  auctionparachainparachain_every: AuctionParachainWhereInput
+  contributionparachain_none: ContributionWhereInput
+  contributionparachain_some: ContributionWhereInput
+  contributionparachain_every: ContributionWhereInput
+  AND: [ParachainWhereInput!]
+  OR: [ParachainWhereInput!]
+}
+
+input ParachainWhereUniqueInput {
+  id: ID!
+}
+
+type ProcessorState {
+  lastCompleteBlock: Float!
+  lastProcessedEvent: String!
+  indexerHead: Float!
+  chainHead: Float!
+}
+
+type Query {
+  auctionParachains(offset: Int, limit: Int = 50, where: AuctionParachainWhereInput, orderBy: [AuctionParachainOrderByInput!]): [AuctionParachain!]!
+  auctionParachainByUniqueInput(where: AuctionParachainWhereUniqueInput!): AuctionParachain
+  auctionParachainsConnection(first: Int, after: String, last: Int, before: String, where: AuctionParachainWhereInput, orderBy: [AuctionParachainOrderByInput!]): AuctionParachainConnection!
+  auctions(offset: Int, limit: Int = 50, where: AuctionWhereInput, orderBy: [AuctionOrderByInput!]): [Auction!]!
+  auctionByUniqueInput(where: AuctionWhereUniqueInput!): Auction
+  auctionsConnection(first: Int, after: String, last: Int, before: String, where: AuctionWhereInput, orderBy: [AuctionOrderByInput!]): AuctionConnection!
+  bids(offset: Int, limit: Int = 50, where: BidWhereInput, orderBy: [BidOrderByInput!]): [Bid!]!
+  bidByUniqueInput(where: BidWhereUniqueInput!): Bid
+  bidsConnection(first: Int, after: String, last: Int, before: String, where: BidWhereInput, orderBy: [BidOrderByInput!]): BidConnection!
+  chronicles(offset: Int, limit: Int = 50, where: ChronicleWhereInput, orderBy: [ChronicleOrderByInput!]): [Chronicle!]!
+  chronicleByUniqueInput(where: ChronicleWhereUniqueInput!): Chronicle
+  chroniclesConnection(first: Int, after: String, last: Int, before: String, where: ChronicleWhereInput, orderBy: [ChronicleOrderByInput!]): ChronicleConnection!
+  contributions(offset: Int, limit: Int = 50, where: ContributionWhereInput, orderBy: [ContributionOrderByInput!]): [Contribution!]!
+  contributionByUniqueInput(where: ContributionWhereUniqueInput!): Contribution
+  contributionsConnection(first: Int, after: String, last: Int, before: String, where: ContributionWhereInput, orderBy: [ContributionOrderByInput!]): ContributionConnection!
+  crowdloanSequences(offset: Int, limit: Int = 50, where: CrowdloanSequenceWhereInput, orderBy: [CrowdloanSequenceOrderByInput!]): [CrowdloanSequence!]!
+  crowdloanSequenceByUniqueInput(where: CrowdloanSequenceWhereUniqueInput!): CrowdloanSequence
+  crowdloanSequencesConnection(first: Int, after: String, last: Int, before: String, where: CrowdloanSequenceWhereInput, orderBy: [CrowdloanSequenceOrderByInput!]): CrowdloanSequenceConnection!
+  crowdloans(offset: Int, limit: Int = 50, where: CrowdloanWhereInput, orderBy: [CrowdloanOrderByInput!]): [Crowdloan!]!
+  crowdloanByUniqueInput(where: CrowdloanWhereUniqueInput!): Crowdloan
+  crowdloansConnection(first: Int, after: String, last: Int, before: String, where: CrowdloanWhereInput, orderBy: [CrowdloanOrderByInput!]): CrowdloanConnection!
+  parachainLeases(offset: Int, limit: Int = 50, where: ParachainLeasesWhereInput, orderBy: [ParachainLeasesOrderByInput!]): [ParachainLeases!]!
+  parachainLeasesByUniqueInput(where: ParachainLeasesWhereUniqueInput!): ParachainLeases
+  parachainLeasesConnection(first: Int, after: String, last: Int, before: String, where: ParachainLeasesWhereInput, orderBy: [ParachainLeasesOrderByInput!]): ParachainLeasesConnection!
+  parachains(offset: Int, limit: Int = 50, where: ParachainWhereInput, orderBy: [ParachainOrderByInput!]): [Parachain!]!
+  parachainByUniqueInput(where: ParachainWhereUniqueInput!): Parachain
+  parachainsConnection(first: Int, after: String, last: Int, before: String, where: ParachainWhereInput, orderBy: [ParachainOrderByInput!]): ParachainConnection!
+}
+
+type StandardDeleteResponse {
+  id: ID!
+}
+
+type Subscription {
+  stateSubscription: ProcessorState!
+}
