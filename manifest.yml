@@ -5,7 +5,7 @@ hydraVersion: "4"
 
 typegen:
   metadata:
-    source: wss://kusama.api.onfinality.io/public-ws
+    source: wss://kusama-rpc.polkadot.io/
   events:
     - balances.Endowed
     # - auctions.AuctionStarted
