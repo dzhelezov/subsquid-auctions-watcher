@@ -64,7 +64,7 @@ services:
       - DB_NAME=indexer
       - DB_HOST=db
       - DB_USER=postgres
-      - DB_PASS=
+      - DB_PASS=postgres
       - DB_PORT=5432
       - HYDRA_INDEXER_STATUS_SERVICE=http://indexer-status-service:8081/status
 

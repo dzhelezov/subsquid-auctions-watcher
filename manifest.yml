@@ -7,38 +7,37 @@ typegen:
   metadata:
     source: wss://kusama-rpc.polkadot.io/
   events:
-    - balances.Endowed
-    # - auctions.AuctionStarted
-    # - auctions.AuctionClosed
-    # - auctions.Reserved
-    # - auctions.Unreserved
-    # - auctions.ReserveConfiscated
-    # - auctions.BidAccepted
-    # - auctions.WinningOffset
-    # - crowdloan.Created
-    # - crowdloan.Contributed
-    # - crowdloan.Withdrew
-    # - crowdloan.Dissolved
-    # - crowdloan.HandleBidResult
-    # - crowdloan.AddedToNewRaise
-    # - slots.Leased
-    # - slots.NewLeasePeriod
-    # - registrar.Registered
+    - auctions.AuctionStarted
+    - auctions.AuctionClosed
+    - auctions.Reserved
+    - auctions.Unreserved
+    - auctions.ReserveConfiscated
+    - auctions.BidAccepted
+    - auctions.WinningOffset
+    - crowdloan.Created
+    - crowdloan.Contributed
+    - crowdloan.Withdrew
+    - crowdloan.Dissolved
+    - crowdloan.HandleBidResult
+    - crowdloan.AddedToNewRaise
+    - slots.Leased
+    - slots.NewLeasePeriod
+    - registrar.Registered
   outDir: chain
 
 mappings:
   mappingsModule: mappings
   eventHandlers:
-    - event: balances.Endowed
-      handler: handleEndowedBalances
-    # - event: auctions.AuctionStarted
-    #   handler: handleAuctionStarted
-    # - event: auctions.BidAccepted
-    #   handler: auctionBidAccepted
-    # - event: crowdloan.HandleBidResult
-    #   handler: handleBidResult
-    # - event: slots.NewLeasePeriod
-    #   handler: newLeasePeriod
+    - event: auctions.AuctionStarted
+      handler: handleAuctionStarted
+    - event: auctions.AuctionClosed
+      handler: handleAuctionClosed
+    - event: auctions.BidAccepted
+      handler: handleBidAccepted
+    - event: crowdloan.HandleBidResult
+      handler: handleBidResult
+    - event: slots.NewLeasePeriod
+      handler: handleLeasePeriod
   extrinsicHandlers:
   preBlockHooks:
   postBlockHooks:

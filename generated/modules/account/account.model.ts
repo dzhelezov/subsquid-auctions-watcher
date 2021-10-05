@@ -5,7 +5,7 @@ import * as jsonTypes from '../jsonfields/jsonfields.model';
 @Model({ api: {} })
 export class Account extends BaseModel {
   @BooleanField({})
-  isFund!: boolean;
+  isFunded!: boolean;
 
   constructor(init?: Partial<Account>) {
     super();

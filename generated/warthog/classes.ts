@@ -25,6 +25,24 @@ import { BaseWhereInput, JsonObject, PaginationArgs, DateOnlyString, DateTimeStr
 
 // @ts-ignore
 import { Account } from "../modules/account/account.model";
+// @ts-ignore
+import { ParachainLeases } from "../modules/parachain-leases/parachain-leases.model";
+// @ts-ignore
+import { Contribution } from "../modules/contribution/contribution.model";
+// @ts-ignore
+import { Crowdloan } from "../modules/crowdloan/crowdloan.model";
+// @ts-ignore
+import { Chronicle } from "../modules/chronicle/chronicle.model";
+// @ts-ignore
+import { Parachain } from "../modules/parachain/parachain.model";
+// @ts-ignore
+import { Bid } from "../modules/bid/bid.model";
+// @ts-ignore
+import { Auction } from "../modules/auction/auction.model";
+// @ts-ignore
+import { AuctionParachain } from "../modules/auction-parachain/auction-parachain.model";
+// @ts-ignore
+import { CrowdloanSequence } from "../modules/crowdloan-sequence/crowdloan-sequence.model";
 
 export enum AccountOrderByEnum {
   createdAt_ASC = "createdAt_ASC",
@@ -36,8 +54,8 @@ export enum AccountOrderByEnum {
   deletedAt_ASC = "deletedAt_ASC",
   deletedAt_DESC = "deletedAt_DESC",
 
-  isFund_ASC = "isFund_ASC",
-  isFund_DESC = "isFund_DESC",
+  isFunded_ASC = "isFunded_ASC",
+  isFunded_DESC = "isFunded_DESC",
 }
 
 registerEnumType(AccountOrderByEnum, {
@@ -119,10 +137,10 @@ export class AccountWhereInput {
   deletedById_in?: string[];
 
   @TypeGraphQLField(() => Boolean, { nullable: true })
-  isFund_eq?: Boolean;
+  isFunded_eq?: Boolean;
 
   @TypeGraphQLField(() => [Boolean], { nullable: true })
-  isFund_in?: Boolean[];
+  isFunded_in?: Boolean[];
 
   @TypeGraphQLField(() => AccountWhereInput, { nullable: true })
   AND?: [AccountWhereInput];
@@ -140,13 +158,13 @@ export class AccountWhereUniqueInput {
 @TypeGraphQLInputType()
 export class AccountCreateInput {
   @TypeGraphQLField()
-  isFund!: boolean;
+  isFunded!: boolean;
 }
 
 @TypeGraphQLInputType()
 export class AccountUpdateInput {
   @TypeGraphQLField({ nullable: true })
-  isFund?: boolean;
+  isFunded?: boolean;
 }
 
 @ArgsType()
@@ -168,4 +186,3025 @@ export class AccountCreateManyArgs {
 export class AccountUpdateArgs {
   @TypeGraphQLField() data!: AccountUpdateInput;
   @TypeGraphQLField() where!: AccountWhereUniqueInput;
+}
+
+export enum ParachainLeasesOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  paraId_ASC = "paraId_ASC",
+  paraId_DESC = "paraId_DESC",
+
+  parachain_ASC = "parachain_ASC",
+  parachain_DESC = "parachain_DESC",
+
+  leaseRange_ASC = "leaseRange_ASC",
+  leaseRange_DESC = "leaseRange_DESC",
+
+  firstLease_ASC = "firstLease_ASC",
+  firstLease_DESC = "firstLease_DESC",
+
+  lastLease_ASC = "lastLease_ASC",
+  lastLease_DESC = "lastLease_DESC",
+
+  latestBidAmount_ASC = "latestBidAmount_ASC",
+  latestBidAmount_DESC = "latestBidAmount_DESC",
+
+  auction_ASC = "auction_ASC",
+  auction_DESC = "auction_DESC",
+
+  activeForAuction_ASC = "activeForAuction_ASC",
+  activeForAuction_DESC = "activeForAuction_DESC",
+
+  winningAmount_ASC = "winningAmount_ASC",
+  winningAmount_DESC = "winningAmount_DESC",
+
+  extraAmount_ASC = "extraAmount_ASC",
+  extraAmount_DESC = "extraAmount_DESC",
+
+  wonBidFrom_ASC = "wonBidFrom_ASC",
+  wonBidFrom_DESC = "wonBidFrom_DESC",
+
+  numBlockWon_ASC = "numBlockWon_ASC",
+  numBlockWon_DESC = "numBlockWon_DESC",
+
+  winningResultBlock_ASC = "winningResultBlock_ASC",
+  winningResultBlock_DESC = "winningResultBlock_DESC",
+
+  hasWon_ASC = "hasWon_ASC",
+  hasWon_DESC = "hasWon_DESC",
+}
+
+registerEnumType(ParachainLeasesOrderByEnum, {
+  name: "ParachainLeasesOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class ParachainLeasesWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  paraId_in?: number[];
+
+  @TypeGraphQLField({ nullable: true })
+  leaseRange_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseRange_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseRange_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseRange_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  leaseRange_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstLease_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstLease_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstLease_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstLease_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstLease_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  firstLease_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastLease_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastLease_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastLease_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastLease_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastLease_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  lastLease_in?: number[];
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  latestBidAmount_eq?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  latestBidAmount_gt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  latestBidAmount_gte?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  latestBidAmount_lt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  latestBidAmount_lte?: string;
+
+  @TypeGraphQLField(() => [BigInt], { nullable: true })
+  latestBidAmount_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  activeForAuction_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  activeForAuction_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  activeForAuction_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  activeForAuction_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  activeForAuction_in?: string[];
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  winningAmount_eq?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  winningAmount_gt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  winningAmount_gte?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  winningAmount_lt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  winningAmount_lte?: string;
+
+  @TypeGraphQLField(() => [BigInt], { nullable: true })
+  winningAmount_in?: string[];
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  extraAmount_eq?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  extraAmount_gt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  extraAmount_gte?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  extraAmount_lt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  extraAmount_lte?: string;
+
+  @TypeGraphQLField(() => [BigInt], { nullable: true })
+  extraAmount_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  wonBidFrom_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  wonBidFrom_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  wonBidFrom_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  wonBidFrom_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  wonBidFrom_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  numBlockWon_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  numBlockWon_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  numBlockWon_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  numBlockWon_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  numBlockWon_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  numBlockWon_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningResultBlock_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningResultBlock_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningResultBlock_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningResultBlock_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningResultBlock_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  winningResultBlock_in?: number[];
+
+  @TypeGraphQLField(() => Boolean, { nullable: true })
+  hasWon_eq?: Boolean;
+
+  @TypeGraphQLField(() => [Boolean], { nullable: true })
+  hasWon_in?: Boolean[];
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachain?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => AuctionWhereInput, { nullable: true })
+  auction?: AuctionWhereInput;
+
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  AND?: [ParachainLeasesWhereInput];
+
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  OR?: [ParachainLeasesWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class ParachainLeasesWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class ParachainLeasesCreateInput {
+  @TypeGraphQLField()
+  paraId!: number;
+
+  @TypeGraphQLField(() => ID)
+  parachain!: string;
+
+  @TypeGraphQLField()
+  leaseRange!: string;
+
+  @TypeGraphQLField()
+  firstLease!: number;
+
+  @TypeGraphQLField()
+  lastLease!: number;
+
+  @TypeGraphQLField()
+  latestBidAmount!: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  auction?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  activeForAuction?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  winningAmount?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  extraAmount?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  wonBidFrom?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  numBlockWon?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  winningResultBlock?: number;
+
+  @TypeGraphQLField()
+  hasWon!: boolean;
+}
+
+@TypeGraphQLInputType()
+export class ParachainLeasesUpdateInput {
+  @TypeGraphQLField({ nullable: true })
+  paraId?: number;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  parachain?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseRange?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  firstLease?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  lastLease?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  latestBidAmount?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  auction?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  activeForAuction?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  winningAmount?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  extraAmount?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  wonBidFrom?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  numBlockWon?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  winningResultBlock?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  hasWon?: boolean;
+}
+
+@ArgsType()
+export class ParachainLeasesWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  where?: ParachainLeasesWhereInput;
+
+  @TypeGraphQLField(() => ParachainLeasesOrderByEnum, { nullable: true })
+  orderBy?: ParachainLeasesOrderByEnum[];
+}
+
+@ArgsType()
+export class ParachainLeasesCreateManyArgs {
+  @TypeGraphQLField(() => [ParachainLeasesCreateInput])
+  data!: ParachainLeasesCreateInput[];
+}
+
+@ArgsType()
+export class ParachainLeasesUpdateArgs {
+  @TypeGraphQLField() data!: ParachainLeasesUpdateInput;
+  @TypeGraphQLField() where!: ParachainLeasesWhereUniqueInput;
+}
+
+export enum ContributionOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  account_ASC = "account_ASC",
+  account_DESC = "account_DESC",
+
+  parachain_ASC = "parachain_ASC",
+  parachain_DESC = "parachain_DESC",
+
+  fund_ASC = "fund_ASC",
+  fund_DESC = "fund_DESC",
+
+  amount_ASC = "amount_ASC",
+  amount_DESC = "amount_DESC",
+
+  blockNum_ASC = "blockNum_ASC",
+  blockNum_DESC = "blockNum_DESC",
+}
+
+registerEnumType(ContributionOrderByEnum, {
+  name: "ContributionOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class ContributionWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  account_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  account_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  account_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  account_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  account_in?: string[];
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_eq?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_gt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_gte?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_lt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_lte?: string;
+
+  @TypeGraphQLField(() => [BigInt], { nullable: true })
+  amount_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  blockNum_in?: number[];
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachain?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  fund?: CrowdloanWhereInput;
+
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  AND?: [ContributionWhereInput];
+
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  OR?: [ContributionWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class ContributionWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class ContributionCreateInput {
+  @TypeGraphQLField(() => DateTime)
+  createdAt!: DateTimeString;
+
+  @TypeGraphQLField()
+  account!: string;
+
+  @TypeGraphQLField(() => ID)
+  parachain!: string;
+
+  @TypeGraphQLField(() => ID)
+  fund!: string;
+
+  @TypeGraphQLField()
+  amount!: string;
+
+  @TypeGraphQLField()
+  blockNum!: number;
+}
+
+@TypeGraphQLInputType()
+export class ContributionUpdateInput {
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt?: DateTimeString;
+
+  @TypeGraphQLField({ nullable: true })
+  account?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  parachain?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  fund?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  amount?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  blockNum?: number;
+}
+
+@ArgsType()
+export class ContributionWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  where?: ContributionWhereInput;
+
+  @TypeGraphQLField(() => ContributionOrderByEnum, { nullable: true })
+  orderBy?: ContributionOrderByEnum[];
+}
+
+@ArgsType()
+export class ContributionCreateManyArgs {
+  @TypeGraphQLField(() => [ContributionCreateInput])
+  data!: ContributionCreateInput[];
+}
+
+@ArgsType()
+export class ContributionUpdateArgs {
+  @TypeGraphQLField() data!: ContributionUpdateInput;
+  @TypeGraphQLField() where!: ContributionWhereUniqueInput;
+}
+
+export enum CrowdloanOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  parachain_ASC = "parachain_ASC",
+  parachain_DESC = "parachain_DESC",
+
+  depositor_ASC = "depositor_ASC",
+  depositor_DESC = "depositor_DESC",
+
+  verifier_ASC = "verifier_ASC",
+  verifier_DESC = "verifier_DESC",
+
+  cap_ASC = "cap_ASC",
+  cap_DESC = "cap_DESC",
+
+  raised_ASC = "raised_ASC",
+  raised_DESC = "raised_DESC",
+
+  lockExpiredBlock_ASC = "lockExpiredBlock_ASC",
+  lockExpiredBlock_DESC = "lockExpiredBlock_DESC",
+
+  blockNum_ASC = "blockNum_ASC",
+  blockNum_DESC = "blockNum_DESC",
+
+  firstSlot_ASC = "firstSlot_ASC",
+  firstSlot_DESC = "firstSlot_DESC",
+
+  lastSlot_ASC = "lastSlot_ASC",
+  lastSlot_DESC = "lastSlot_DESC",
+
+  status_ASC = "status_ASC",
+  status_DESC = "status_DESC",
+
+  leaseExpiredBlock_ASC = "leaseExpiredBlock_ASC",
+  leaseExpiredBlock_DESC = "leaseExpiredBlock_DESC",
+
+  dissolvedBlock_ASC = "dissolvedBlock_ASC",
+  dissolvedBlock_DESC = "dissolvedBlock_DESC",
+
+  isFinished_ASC = "isFinished_ASC",
+  isFinished_DESC = "isFinished_DESC",
+
+  wonAuctionId_ASC = "wonAuctionId_ASC",
+  wonAuctionId_DESC = "wonAuctionId_DESC",
+}
+
+registerEnumType(CrowdloanOrderByEnum, {
+  name: "CrowdloanOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class CrowdloanWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  depositor_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  depositor_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  depositor_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  depositor_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  depositor_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  verifier_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  verifier_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  verifier_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  verifier_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  verifier_in?: string[];
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  cap_eq?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  cap_gt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  cap_gte?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  cap_lt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  cap_lte?: string;
+
+  @TypeGraphQLField(() => [BigInt], { nullable: true })
+  cap_in?: string[];
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  raised_eq?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  raised_gt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  raised_gte?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  raised_lt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  raised_lte?: string;
+
+  @TypeGraphQLField(() => [BigInt], { nullable: true })
+  raised_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lockExpiredBlock_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lockExpiredBlock_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lockExpiredBlock_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lockExpiredBlock_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lockExpiredBlock_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  lockExpiredBlock_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  blockNum_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  firstSlot_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  lastSlot_in?: number[];
+
+  @TypeGraphQLField({ nullable: true })
+  status_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  status_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  status_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  status_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  status_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseExpiredBlock_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseExpiredBlock_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseExpiredBlock_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseExpiredBlock_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseExpiredBlock_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  leaseExpiredBlock_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  dissolvedBlock_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  dissolvedBlock_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  dissolvedBlock_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  dissolvedBlock_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  dissolvedBlock_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  dissolvedBlock_in?: number[];
+
+  @TypeGraphQLField(() => Boolean, { nullable: true })
+  isFinished_eq?: Boolean;
+
+  @TypeGraphQLField(() => [Boolean], { nullable: true })
+  isFinished_in?: Boolean[];
+
+  @TypeGraphQLField({ nullable: true })
+  wonAuctionId_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  wonAuctionId_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  wonAuctionId_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  wonAuctionId_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  wonAuctionId_in?: string[];
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachain?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  contributions_none?: ContributionWhereInput;
+
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  contributions_some?: ContributionWhereInput;
+
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  contributions_every?: ContributionWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bidfund_none?: BidWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bidfund_some?: BidWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bidfund_every?: BidWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachainactiveFund_none?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachainactiveFund_some?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachainactiveFund_every?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  AND?: [CrowdloanWhereInput];
+
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  OR?: [CrowdloanWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class CrowdloanWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class CrowdloanCreateInput {
+  @TypeGraphQLField(() => DateTime)
+  createdAt!: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt?: DateTimeString;
+
+  @TypeGraphQLField(() => ID)
+  parachain!: string;
+
+  @TypeGraphQLField()
+  depositor!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  verifier?: string;
+
+  @TypeGraphQLField()
+  cap!: string;
+
+  @TypeGraphQLField()
+  raised!: string;
+
+  @TypeGraphQLField()
+  lockExpiredBlock!: number;
+
+  @TypeGraphQLField({ nullable: true })
+  blockNum?: number;
+
+  @TypeGraphQLField()
+  firstSlot!: number;
+
+  @TypeGraphQLField()
+  lastSlot!: number;
+
+  @TypeGraphQLField()
+  status!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseExpiredBlock?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  dissolvedBlock?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  isFinished?: boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  wonAuctionId?: string;
+}
+
+@TypeGraphQLInputType()
+export class CrowdloanUpdateInput {
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  parachain?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  depositor?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  verifier?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  cap?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  raised?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  lockExpiredBlock?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  blockNum?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  firstSlot?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  lastSlot?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  status?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseExpiredBlock?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  dissolvedBlock?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  isFinished?: boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  wonAuctionId?: string;
+}
+
+@ArgsType()
+export class CrowdloanWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  where?: CrowdloanWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanOrderByEnum, { nullable: true })
+  orderBy?: CrowdloanOrderByEnum[];
+}
+
+@ArgsType()
+export class CrowdloanCreateManyArgs {
+  @TypeGraphQLField(() => [CrowdloanCreateInput])
+  data!: CrowdloanCreateInput[];
+}
+
+@ArgsType()
+export class CrowdloanUpdateArgs {
+  @TypeGraphQLField() data!: CrowdloanUpdateInput;
+  @TypeGraphQLField() where!: CrowdloanWhereUniqueInput;
+}
+
+export enum ChronicleOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  curAuction_ASC = "curAuction_ASC",
+  curAuction_DESC = "curAuction_DESC",
+
+  curAuctionId_ASC = "curAuctionId_ASC",
+  curAuctionId_DESC = "curAuctionId_DESC",
+
+  curBlockNum_ASC = "curBlockNum_ASC",
+  curBlockNum_DESC = "curBlockNum_DESC",
+
+  curLease_ASC = "curLease_ASC",
+  curLease_DESC = "curLease_DESC",
+
+  curLeaseStart_ASC = "curLeaseStart_ASC",
+  curLeaseStart_DESC = "curLeaseStart_DESC",
+
+  curLeaseEnd_ASC = "curLeaseEnd_ASC",
+  curLeaseEnd_DESC = "curLeaseEnd_DESC",
+}
+
+registerEnumType(ChronicleOrderByEnum, {
+  name: "ChronicleOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class ChronicleWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  curAuctionId_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  curAuctionId_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  curAuctionId_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  curAuctionId_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  curAuctionId_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curBlockNum_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curBlockNum_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curBlockNum_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curBlockNum_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curBlockNum_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  curBlockNum_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLease_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLease_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLease_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLease_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLease_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  curLease_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseStart_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseStart_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseStart_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseStart_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseStart_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  curLeaseStart_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseEnd_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseEnd_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseEnd_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseEnd_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curLeaseEnd_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  curLeaseEnd_in?: number[];
+
+  @TypeGraphQLField(() => AuctionWhereInput, { nullable: true })
+  curAuction?: AuctionWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachains_none?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachains_some?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachains_every?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ChronicleWhereInput, { nullable: true })
+  AND?: [ChronicleWhereInput];
+
+  @TypeGraphQLField(() => ChronicleWhereInput, { nullable: true })
+  OR?: [ChronicleWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class ChronicleWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class ChronicleCreateInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  curAuction?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  curAuctionId?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  curBlockNum?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  curLease?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  curLeaseStart?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  curLeaseEnd?: number;
+}
+
+@TypeGraphQLInputType()
+export class ChronicleUpdateInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  curAuction?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  curAuctionId?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  curBlockNum?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  curLease?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  curLeaseStart?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  curLeaseEnd?: number;
+}
+
+@ArgsType()
+export class ChronicleWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => ChronicleWhereInput, { nullable: true })
+  where?: ChronicleWhereInput;
+
+  @TypeGraphQLField(() => ChronicleOrderByEnum, { nullable: true })
+  orderBy?: ChronicleOrderByEnum[];
+}
+
+@ArgsType()
+export class ChronicleCreateManyArgs {
+  @TypeGraphQLField(() => [ChronicleCreateInput])
+  data!: ChronicleCreateInput[];
+}
+
+@ArgsType()
+export class ChronicleUpdateArgs {
+  @TypeGraphQLField() data!: ChronicleUpdateInput;
+  @TypeGraphQLField() where!: ChronicleWhereUniqueInput;
+}
+
+export enum ParachainOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  paraId_ASC = "paraId_ASC",
+  paraId_DESC = "paraId_DESC",
+
+  creationBlock_ASC = "creationBlock_ASC",
+  creationBlock_DESC = "creationBlock_DESC",
+
+  deregistered_ASC = "deregistered_ASC",
+  deregistered_DESC = "deregistered_DESC",
+
+  deposit_ASC = "deposit_ASC",
+  deposit_DESC = "deposit_DESC",
+
+  manager_ASC = "manager_ASC",
+  manager_DESC = "manager_DESC",
+
+  activeFund_ASC = "activeFund_ASC",
+  activeFund_DESC = "activeFund_DESC",
+
+  latestBid_ASC = "latestBid_ASC",
+  latestBid_DESC = "latestBid_DESC",
+
+  chronicle_ASC = "chronicle_ASC",
+  chronicle_DESC = "chronicle_DESC",
+}
+
+registerEnumType(ParachainOrderByEnum, {
+  name: "ParachainOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class ParachainWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  paraId_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  paraId_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  creationBlock_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  creationBlock_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  creationBlock_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  creationBlock_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  creationBlock_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  creationBlock_in?: number[];
+
+  @TypeGraphQLField(() => Boolean, { nullable: true })
+  deregistered_eq?: Boolean;
+
+  @TypeGraphQLField(() => [Boolean], { nullable: true })
+  deregistered_in?: Boolean[];
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  deposit_eq?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  deposit_gt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  deposit_gte?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  deposit_lt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  deposit_lte?: string;
+
+  @TypeGraphQLField(() => [BigInt], { nullable: true })
+  deposit_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  manager_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  manager_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  manager_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  manager_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  manager_in?: string[];
+
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  leases_none?: ParachainLeasesWhereInput;
+
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  leases_some?: ParachainLeasesWhereInput;
+
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  leases_every?: ParachainLeasesWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bids_none?: BidWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bids_some?: BidWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bids_every?: BidWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  funds_none?: CrowdloanWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  funds_some?: CrowdloanWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  funds_every?: CrowdloanWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  activeFund?: CrowdloanWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  latestBid?: BidWhereInput;
+
+  @TypeGraphQLField(() => ChronicleWhereInput, { nullable: true })
+  chronicle?: ChronicleWhereInput;
+
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  auctionparachainparachain_none?: AuctionParachainWhereInput;
+
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  auctionparachainparachain_some?: AuctionParachainWhereInput;
+
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  auctionparachainparachain_every?: AuctionParachainWhereInput;
+
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  contributionparachain_none?: ContributionWhereInput;
+
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  contributionparachain_some?: ContributionWhereInput;
+
+  @TypeGraphQLField(() => ContributionWhereInput, { nullable: true })
+  contributionparachain_every?: ContributionWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  AND?: [ParachainWhereInput];
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  OR?: [ParachainWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class ParachainWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class ParachainCreateInput {
+  @TypeGraphQLField(() => DateTime)
+  createdAt!: DateTimeString;
+
+  @TypeGraphQLField()
+  paraId!: number;
+
+  @TypeGraphQLField({ nullable: true })
+  creationBlock?: number;
+
+  @TypeGraphQLField()
+  deregistered!: boolean;
+
+  @TypeGraphQLField()
+  deposit!: string;
+
+  @TypeGraphQLField()
+  manager!: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  activeFund?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  latestBid?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  chronicle?: string;
+}
+
+@TypeGraphQLInputType()
+export class ParachainUpdateInput {
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt?: DateTimeString;
+
+  @TypeGraphQLField({ nullable: true })
+  paraId?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  creationBlock?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  deregistered?: boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  deposit?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  manager?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  activeFund?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  latestBid?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  chronicle?: string;
+}
+
+@ArgsType()
+export class ParachainWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  where?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ParachainOrderByEnum, { nullable: true })
+  orderBy?: ParachainOrderByEnum[];
+}
+
+@ArgsType()
+export class ParachainCreateManyArgs {
+  @TypeGraphQLField(() => [ParachainCreateInput])
+  data!: ParachainCreateInput[];
+}
+
+@ArgsType()
+export class ParachainUpdateArgs {
+  @TypeGraphQLField() data!: ParachainUpdateInput;
+  @TypeGraphQLField() where!: ParachainWhereUniqueInput;
+}
+
+export enum BidOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  auction_ASC = "auction_ASC",
+  auction_DESC = "auction_DESC",
+
+  winningAuction_ASC = "winningAuction_ASC",
+  winningAuction_DESC = "winningAuction_DESC",
+
+  blockNum_ASC = "blockNum_ASC",
+  blockNum_DESC = "blockNum_DESC",
+
+  parachain_ASC = "parachain_ASC",
+  parachain_DESC = "parachain_DESC",
+
+  isCrowdloan_ASC = "isCrowdloan_ASC",
+  isCrowdloan_DESC = "isCrowdloan_DESC",
+
+  amount_ASC = "amount_ASC",
+  amount_DESC = "amount_DESC",
+
+  fund_ASC = "fund_ASC",
+  fund_DESC = "fund_DESC",
+
+  firstSlot_ASC = "firstSlot_ASC",
+  firstSlot_DESC = "firstSlot_DESC",
+
+  lastSlot_ASC = "lastSlot_ASC",
+  lastSlot_DESC = "lastSlot_DESC",
+
+  bidder_ASC = "bidder_ASC",
+  bidder_DESC = "bidder_DESC",
+}
+
+registerEnumType(BidOrderByEnum, {
+  name: "BidOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class BidWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningAuction_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningAuction_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningAuction_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningAuction_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  winningAuction_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  winningAuction_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  blockNum_in?: number[];
+
+  @TypeGraphQLField(() => Boolean, { nullable: true })
+  isCrowdloan_eq?: Boolean;
+
+  @TypeGraphQLField(() => [Boolean], { nullable: true })
+  isCrowdloan_in?: Boolean[];
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_eq?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_gt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_gte?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_lt?: string;
+
+  @TypeGraphQLField(() => BigInt, { nullable: true })
+  amount_lte?: string;
+
+  @TypeGraphQLField(() => [BigInt], { nullable: true })
+  amount_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  firstSlot_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  lastSlot_in?: number[];
+
+  @TypeGraphQLField({ nullable: true })
+  bidder_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  bidder_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  bidder_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  bidder_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  bidder_in?: string[];
+
+  @TypeGraphQLField(() => AuctionWhereInput, { nullable: true })
+  auction?: AuctionWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachain?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanWhereInput, { nullable: true })
+  fund?: CrowdloanWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachainlatestBid_none?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachainlatestBid_some?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachainlatestBid_every?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  AND?: [BidWhereInput];
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  OR?: [BidWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class BidWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class BidCreateInput {
+  @TypeGraphQLField(() => DateTime)
+  createdAt!: DateTimeString;
+
+  @TypeGraphQLField(() => ID)
+  auction!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  winningAuction?: number;
+
+  @TypeGraphQLField()
+  blockNum!: number;
+
+  @TypeGraphQLField(() => ID)
+  parachain!: string;
+
+  @TypeGraphQLField()
+  isCrowdloan!: boolean;
+
+  @TypeGraphQLField()
+  amount!: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  fund?: string;
+
+  @TypeGraphQLField()
+  firstSlot!: number;
+
+  @TypeGraphQLField()
+  lastSlot!: number;
+
+  @TypeGraphQLField({ nullable: true })
+  bidder?: string;
+}
+
+@TypeGraphQLInputType()
+export class BidUpdateInput {
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  auction?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  winningAuction?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  blockNum?: number;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  parachain?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  isCrowdloan?: boolean;
+
+  @TypeGraphQLField({ nullable: true })
+  amount?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  fund?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  firstSlot?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  lastSlot?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  bidder?: string;
+}
+
+@ArgsType()
+export class BidWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  where?: BidWhereInput;
+
+  @TypeGraphQLField(() => BidOrderByEnum, { nullable: true })
+  orderBy?: BidOrderByEnum[];
+}
+
+@ArgsType()
+export class BidCreateManyArgs {
+  @TypeGraphQLField(() => [BidCreateInput])
+  data!: BidCreateInput[];
+}
+
+@ArgsType()
+export class BidUpdateArgs {
+  @TypeGraphQLField() data!: BidUpdateInput;
+  @TypeGraphQLField() where!: BidWhereUniqueInput;
+}
+
+export enum AuctionOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  blockNum_ASC = "blockNum_ASC",
+  blockNum_DESC = "blockNum_DESC",
+
+  status_ASC = "status_ASC",
+  status_DESC = "status_DESC",
+
+  leaseStart_ASC = "leaseStart_ASC",
+  leaseStart_DESC = "leaseStart_DESC",
+
+  slotsStart_ASC = "slotsStart_ASC",
+  slotsStart_DESC = "slotsStart_DESC",
+
+  leaseEnd_ASC = "leaseEnd_ASC",
+  leaseEnd_DESC = "leaseEnd_DESC",
+
+  slotsEnd_ASC = "slotsEnd_ASC",
+  slotsEnd_DESC = "slotsEnd_DESC",
+
+  closingStart_ASC = "closingStart_ASC",
+  closingStart_DESC = "closingStart_DESC",
+
+  closingEnd_ASC = "closingEnd_ASC",
+  closingEnd_DESC = "closingEnd_DESC",
+
+  resultBlock_ASC = "resultBlock_ASC",
+  resultBlock_DESC = "resultBlock_DESC",
+
+  ongoing_ASC = "ongoing_ASC",
+  ongoing_DESC = "ongoing_DESC",
+}
+
+registerEnumType(AuctionOrderByEnum, {
+  name: "AuctionOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class AuctionWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  blockNum_in?: number[];
+
+  @TypeGraphQLField({ nullable: true })
+  status_eq?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  status_contains?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  status_startsWith?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  status_endsWith?: string;
+
+  @TypeGraphQLField(() => [String], { nullable: true })
+  status_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseStart_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseStart_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseStart_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseStart_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseStart_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  leaseStart_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsStart_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsStart_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsStart_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsStart_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsStart_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  slotsStart_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseEnd_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseEnd_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseEnd_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseEnd_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  leaseEnd_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  leaseEnd_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsEnd_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsEnd_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsEnd_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsEnd_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  slotsEnd_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  slotsEnd_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingStart_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingStart_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingStart_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingStart_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingStart_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  closingStart_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingEnd_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingEnd_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingEnd_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingEnd_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  closingEnd_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  closingEnd_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  resultBlock_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  resultBlock_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  resultBlock_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  resultBlock_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  resultBlock_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  resultBlock_in?: number[];
+
+  @TypeGraphQLField(() => Boolean, { nullable: true })
+  ongoing_eq?: Boolean;
+
+  @TypeGraphQLField(() => [Boolean], { nullable: true })
+  ongoing_in?: Boolean[];
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bids_none?: BidWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bids_some?: BidWhereInput;
+
+  @TypeGraphQLField(() => BidWhereInput, { nullable: true })
+  bids_every?: BidWhereInput;
+
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  parachainLeases_none?: ParachainLeasesWhereInput;
+
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  parachainLeases_some?: ParachainLeasesWhereInput;
+
+  @TypeGraphQLField(() => ParachainLeasesWhereInput, { nullable: true })
+  parachainLeases_every?: ParachainLeasesWhereInput;
+
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  auctionparachainauction_none?: AuctionParachainWhereInput;
+
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  auctionparachainauction_some?: AuctionParachainWhereInput;
+
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  auctionparachainauction_every?: AuctionParachainWhereInput;
+
+  @TypeGraphQLField(() => ChronicleWhereInput, { nullable: true })
+  chroniclecurAuction_none?: ChronicleWhereInput;
+
+  @TypeGraphQLField(() => ChronicleWhereInput, { nullable: true })
+  chroniclecurAuction_some?: ChronicleWhereInput;
+
+  @TypeGraphQLField(() => ChronicleWhereInput, { nullable: true })
+  chroniclecurAuction_every?: ChronicleWhereInput;
+
+  @TypeGraphQLField(() => AuctionWhereInput, { nullable: true })
+  AND?: [AuctionWhereInput];
+
+  @TypeGraphQLField(() => AuctionWhereInput, { nullable: true })
+  OR?: [AuctionWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class AuctionWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class AuctionCreateInput {
+  @TypeGraphQLField()
+  blockNum!: number;
+
+  @TypeGraphQLField()
+  status!: string;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseStart?: number;
+
+  @TypeGraphQLField()
+  slotsStart!: number;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseEnd?: number;
+
+  @TypeGraphQLField()
+  slotsEnd!: number;
+
+  @TypeGraphQLField()
+  closingStart!: number;
+
+  @TypeGraphQLField()
+  closingEnd!: number;
+
+  @TypeGraphQLField({ nullable: true })
+  resultBlock?: number;
+
+  @TypeGraphQLField()
+  ongoing!: boolean;
+}
+
+@TypeGraphQLInputType()
+export class AuctionUpdateInput {
+  @TypeGraphQLField({ nullable: true })
+  blockNum?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  status?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseStart?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  slotsStart?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  leaseEnd?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  slotsEnd?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  closingStart?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  closingEnd?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  resultBlock?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  ongoing?: boolean;
+}
+
+@ArgsType()
+export class AuctionWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => AuctionWhereInput, { nullable: true })
+  where?: AuctionWhereInput;
+
+  @TypeGraphQLField(() => AuctionOrderByEnum, { nullable: true })
+  orderBy?: AuctionOrderByEnum[];
+}
+
+@ArgsType()
+export class AuctionCreateManyArgs {
+  @TypeGraphQLField(() => [AuctionCreateInput])
+  data!: AuctionCreateInput[];
+}
+
+@ArgsType()
+export class AuctionUpdateArgs {
+  @TypeGraphQLField() data!: AuctionUpdateInput;
+  @TypeGraphQLField() where!: AuctionWhereUniqueInput;
+}
+
+export enum AuctionParachainOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  auction_ASC = "auction_ASC",
+  auction_DESC = "auction_DESC",
+
+  parachain_ASC = "parachain_ASC",
+  parachain_DESC = "parachain_DESC",
+
+  blockNum_ASC = "blockNum_ASC",
+  blockNum_DESC = "blockNum_DESC",
+
+  firstSlot_ASC = "firstSlot_ASC",
+  firstSlot_DESC = "firstSlot_DESC",
+
+  lastSlot_ASC = "lastSlot_ASC",
+  lastSlot_DESC = "lastSlot_DESC",
+}
+
+registerEnumType(AuctionParachainOrderByEnum, {
+  name: "AuctionParachainOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class AuctionParachainWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  blockNum_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  firstSlot_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  firstSlot_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  lastSlot_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  lastSlot_in?: number[];
+
+  @TypeGraphQLField(() => AuctionWhereInput, { nullable: true })
+  auction?: AuctionWhereInput;
+
+  @TypeGraphQLField(() => ParachainWhereInput, { nullable: true })
+  parachain?: ParachainWhereInput;
+
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  AND?: [AuctionParachainWhereInput];
+
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  OR?: [AuctionParachainWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class AuctionParachainWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class AuctionParachainCreateInput {
+  @TypeGraphQLField(() => DateTime)
+  createdAt!: DateTimeString;
+
+  @TypeGraphQLField(() => ID)
+  auction!: string;
+
+  @TypeGraphQLField(() => ID)
+  parachain!: string;
+
+  @TypeGraphQLField()
+  blockNum!: number;
+
+  @TypeGraphQLField()
+  firstSlot!: number;
+
+  @TypeGraphQLField()
+  lastSlot!: number;
+}
+
+@TypeGraphQLInputType()
+export class AuctionParachainUpdateInput {
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  auction?: string;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  parachain?: string;
+
+  @TypeGraphQLField({ nullable: true })
+  blockNum?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  firstSlot?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  lastSlot?: number;
+}
+
+@ArgsType()
+export class AuctionParachainWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => AuctionParachainWhereInput, { nullable: true })
+  where?: AuctionParachainWhereInput;
+
+  @TypeGraphQLField(() => AuctionParachainOrderByEnum, { nullable: true })
+  orderBy?: AuctionParachainOrderByEnum[];
+}
+
+@ArgsType()
+export class AuctionParachainCreateManyArgs {
+  @TypeGraphQLField(() => [AuctionParachainCreateInput])
+  data!: AuctionParachainCreateInput[];
+}
+
+@ArgsType()
+export class AuctionParachainUpdateArgs {
+  @TypeGraphQLField() data!: AuctionParachainUpdateInput;
+  @TypeGraphQLField() where!: AuctionParachainWhereUniqueInput;
+}
+
+export enum CrowdloanSequenceOrderByEnum {
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+
+  deletedAt_ASC = "deletedAt_ASC",
+  deletedAt_DESC = "deletedAt_DESC",
+
+  curIndex_ASC = "curIndex_ASC",
+  curIndex_DESC = "curIndex_DESC",
+
+  blockNum_ASC = "blockNum_ASC",
+  blockNum_DESC = "blockNum_DESC",
+}
+
+registerEnumType(CrowdloanSequenceOrderByEnum, {
+  name: "CrowdloanSequenceOrderByInput",
+});
+
+@TypeGraphQLInputType()
+export class CrowdloanSequenceWhereInput {
+  @TypeGraphQLField(() => ID, { nullable: true })
+  id_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  id_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_eq?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_lte?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gt?: DateTimeString;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt_gte?: DateTimeString;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  createdById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  createdById_in?: string[];
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  updatedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  updatedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  updatedById_in?: string[];
+
+  @TypeGraphQLField({ nullable: true })
+  deletedAt_all?: Boolean;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_eq?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_lte?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gt?: Date;
+
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  deletedAt_gte?: Date;
+
+  @TypeGraphQLField(() => ID, { nullable: true })
+  deletedById_eq?: string;
+
+  @TypeGraphQLField(() => [ID], { nullable: true })
+  deletedById_in?: string[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curIndex_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curIndex_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curIndex_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curIndex_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  curIndex_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  curIndex_in?: number[];
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_eq?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_gte?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lt?: number;
+
+  @TypeGraphQLField(() => Int, { nullable: true })
+  blockNum_lte?: number;
+
+  @TypeGraphQLField(() => [Int], { nullable: true })
+  blockNum_in?: number[];
+
+  @TypeGraphQLField(() => CrowdloanSequenceWhereInput, { nullable: true })
+  AND?: [CrowdloanSequenceWhereInput];
+
+  @TypeGraphQLField(() => CrowdloanSequenceWhereInput, { nullable: true })
+  OR?: [CrowdloanSequenceWhereInput];
+}
+
+@TypeGraphQLInputType()
+export class CrowdloanSequenceWhereUniqueInput {
+  @TypeGraphQLField(() => ID)
+  id?: string;
+}
+
+@TypeGraphQLInputType()
+export class CrowdloanSequenceCreateInput {
+  @TypeGraphQLField(() => DateTime)
+  createdAt!: DateTimeString;
+
+  @TypeGraphQLField()
+  curIndex!: number;
+
+  @TypeGraphQLField()
+  blockNum!: number;
+}
+
+@TypeGraphQLInputType()
+export class CrowdloanSequenceUpdateInput {
+  @TypeGraphQLField(() => DateTime, { nullable: true })
+  createdAt?: DateTimeString;
+
+  @TypeGraphQLField({ nullable: true })
+  curIndex?: number;
+
+  @TypeGraphQLField({ nullable: true })
+  blockNum?: number;
+}
+
+@ArgsType()
+export class CrowdloanSequenceWhereArgs extends PaginationArgs {
+  @TypeGraphQLField(() => CrowdloanSequenceWhereInput, { nullable: true })
+  where?: CrowdloanSequenceWhereInput;
+
+  @TypeGraphQLField(() => CrowdloanSequenceOrderByEnum, { nullable: true })
+  orderBy?: CrowdloanSequenceOrderByEnum[];
+}
+
+@ArgsType()
+export class CrowdloanSequenceCreateManyArgs {
+  @TypeGraphQLField(() => [CrowdloanSequenceCreateInput])
+  data!: CrowdloanSequenceCreateInput[];
+}
+
+@ArgsType()
+export class CrowdloanSequenceUpdateArgs {
+  @TypeGraphQLField() data!: CrowdloanSequenceUpdateInput;
+  @TypeGraphQLField() where!: CrowdloanSequenceWhereUniqueInput;
 }
