@@ -32,12 +32,12 @@ mappings:
       handler: handleAuctionStarted
     - event: auctions.AuctionClosed
       handler: handleAuctionClosed
-    - event: auctions.BidAccepted
-      handler: handleBidAccepted
-    - event: crowdloan.HandleBidResult
-      handler: handleBidResult
-    - event: slots.NewLeasePeriod
-      handler: handleLeasePeriod
+    # - event: auctions.BidAccepted
+    #   handler: handleBidAccepted
+    # - event: crowdloan.HandleBidResult
+    #   handler: handleBidResult
+    # - event: slots.NewLeasePeriod
+    #   handler: handleLeasePeriod
   extrinsicHandlers:
   preBlockHooks:
   postBlockHooks:

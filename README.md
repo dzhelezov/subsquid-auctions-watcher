@@ -49,7 +49,7 @@ If you modified `schema.graphql`:
 npm run codegen
 
 # Analyze database state and create a new migration to match generated models
-npm run db:create-migration # add -n "myName" to skip the migration name prompt
+npm run db:create-migration -n init# add -n "myName" to skip the migration name prompt
 
 # Apply the migrations
 npm run db:migrate

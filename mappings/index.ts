@@ -42,9 +42,9 @@ import { service } from './api'
 
     await store.save(auction);
 
-    const chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
-    chronicle.curAuctionId = auctionId.toString();
-    await store.save(chronicle);
+    // const chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
+    // chronicle.curAuctionId = auctionId.toString();
+    // await store.save(chronicle);
 
 };
 
@@ -61,9 +61,9 @@ export async function handleAuctionClosed({
   auction.ongoing = false
   await store.save(auction);
 
-  const chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
-  chronicle.curAuctionId = ''
-  await store.save(chronicle);
+  // const chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
+  // chronicle.curAuctionId = ''
+  // await store.save(chronicle);
 
 };
 
