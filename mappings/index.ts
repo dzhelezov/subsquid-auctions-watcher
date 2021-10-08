@@ -198,7 +198,55 @@ export async function handleLeasedSlot({
   event,
   block,
 }: EventContext & StoreContext): Promise<void> {
+  const [paraId, from, firstLease, leaseCount, extra, total] = new Types.Slots.LeasedEvent(event).params
+
+  const lastLease = firstLease.toNumber() + leaseCount.toNumber() - 1;
+
+  const totalUsed = total.toNumber();
+  const extraAmount = extra.toNumber();
+
+  const [ongoingAuction] = await store.find(Models.Auction, {where: {ongoing: true}, take: 1});
+  const curAuction = ongoingAuction || { id: 'unknown', resultBlock: block.height, leaseEnd: null };
+
+  if (curAuction.id === 'unknown') {
+    let auction = await store.save(new Models.Auction({
+      id: 'unknown',
+      blockNum: block.height,
+      status: 'Closed',
+      slotsStart: 0,
+      slotsEnd: 0,
+      closingStart: 0,
+      closingEnd: 0,
+      ongoing: false
+    }))
+  }
+
+  if (await isFundAddress(from.toString())) {
+    let crowdloan = await store.find(Models.Crowdloan, {where: paraId.toString(), take: 1})
+    crowdloan[0].status = 'Won'
+    crowdloan[0].wonAuctionId = curAuction.id
+    crowdloan[0].leaseExpiredBlock = curAuction.leaseEnd
+
+    await store.save(crowdloan);
+  }
+
+  const { id: auctionId, resultBlock } = curAuction;
+ 
+  const parachainLeases = await store.find(Models.ParachainLeases, {where: `${paraId}-${auctionId}-${firstLease}-${lastLease}`});
   
+  parachainLeases[0].id = paraId.toString(),
+  parachainLeases[0].leaseRange = `${auctionId}-${firstLease}-${lastLease}`,
+  parachainLeases[0].firstLease = firstLease.toNumber()
+  parachainLeases[0].lastLease = lastLease
+  parachainLeases[0].latestBidAmount = new BN(totalUsed)
+  parachainLeases[0].parachain.id = paraId.toString()
+  parachainLeases[0].extraAmount = new BN(extraAmount)
+  parachainLeases[0].winningAmount = new BN(totalUsed)
+  parachainLeases[0].wonBidFrom = from.toHex()
+  parachainLeases[0].winningResultBlock = resultBlock,
+  parachainLeases[0].hasWon = true
+
+  await store.save(parachainLeases);
 };
 
 const isFundAddress = async (address: string) => {
