@@ -7,6 +7,7 @@ typegen:
   metadata:
     source: wss://kusama-rpc.polkadot.io/
   events:
+    - registrar.Registered
     - auctions.AuctionStarted
     - auctions.AuctionClosed
     - auctions.Reserved
@@ -22,7 +23,6 @@ typegen:
     - crowdloan.AddedToNewRaise
     - slots.Leased
     - slots.NewLeasePeriod
-    - registrar.Registered
   outDir: chain
 
 mappings:
@@ -30,8 +30,6 @@ mappings:
   eventHandlers:
     - event: registrar.Registered
       handler: handleParachainRegistration
-    - event: crowdloan.Created
-      handler: handleCrowdloanCreated
     - event: auctions.AuctionStarted
       handler: handleAuctionStarted
     - event: auctions.AuctionClosed
@@ -42,8 +40,8 @@ mappings:
       handler: handleCrowdloanContributed
     - event: crowdloan.Dissolved
       handler: handleCrowdloanDissolved
-    - event: crowdloan.HandleBidResult
-      handler: handleBidResult
+    - event: slots.NewLeasePeriod
+      handler: handleNewLeasePeriod
     - event: slots.Leased
       handler: handleLeasedSlot
   extrinsicHandlers:

@@ -32,7 +32,6 @@ export async function handleParachainRegistration({
   parachain.deregistered = false
 
   await store.save(parachain)
-
 };
 
 export async function handleAuctionStarted({
@@ -60,13 +59,11 @@ export async function handleAuctionStarted({
   auction.closingStart = auctionEnds.toNumber()
   auction.ongoing = true
   auction.closingEnd = auctionEnds.toNumber() + endingPeriod
-
   await store.save(auction);
 
-  // const chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
-  // chronicle.curAuctionId = auctionId.toString();
-  // await store.save(chronicle);
-
+  const chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
+  chronicle.curAuctionId = auctionId.toString();
+  await store.save(chronicle);
 };
 
 export async function handleAuctionClosed({
@@ -82,10 +79,177 @@ export async function handleAuctionClosed({
   auction.ongoing = false
   await store.save(auction);
 
-  // const chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
-  // chronicle.curAuctionId = ''
-  // await store.save(chronicle);
+  const chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
+  chronicle.curAuctionId = auctionId.toString()
+  await store.save(chronicle);
+};
 
+export async function handleBidAccepted({
+  store,
+  event,
+  block,
+}: EventContext & StoreContext): Promise<void> {
+
+  const [bidderId, paraId, bidAmount, startSlot, endSlot] = new Types.Auctions.BidAcceptedEvent(event).params
+
+  let api = await service();
+  const auctionId = (await api.query.auctions.auctionCounter()).toJSON() as number;
+  const isFund = isFundAddress(bidderId.toHex()) as unknown as boolean;
+  const bid = await getOrCreate(store, Models.Bid, `${block.height}-${bidderId}-${paraId}-${startSlot}-${endSlot}`)
+
+  const fundId = await getLatestCrowdloanId(paraId.toString(), store);
+  const bidAmt = new BN(bidAmount.toNumber())
+
+  bid.id = `${block.height}-${bidderId}-${paraId}-${startSlot}-${endSlot}`
+  bid.auction.id = auctionId.toString()
+  bid.blockNum = block.height
+  bid.winningAuction = auctionId
+  bid.parachain.id = paraId.toString()
+  bid.isCrowdloan = isFund
+  bid.amount = bidAmt
+  bid.firstSlot = startSlot.toNumber()
+  bid.lastSlot = endSlot.toNumber()
+  bid.createdAt = new Date(block.timestamp)
+  // bid.fund.id = isFund ? fundId : ''
+  bid.bidder = isFund ? '' : bidderId.toHex()
+
+  await store.save(bid);
+
+  const auctionParaId = `${paraId}-${startSlot}-${endSlot}-${auctionId}`;
+  const auctionPara = await store.get(Models.AuctionParachain,{
+    where: { auctionParaId }
+  });
+  if (!auctionPara) {
+    await store.save(new Models.AuctionParachain({
+      id: auctionParaId,
+      firstSlot: startSlot.toNumber(),
+      lastSlot: endSlot.toNumber(),
+      createdAt: new Date(block.timestamp),
+      blockNum: block.height
+    }))
+  }
+};
+
+export async function handleCrowdloanContributed({
+  store,
+  event,
+  block,
+}: EventContext & StoreContext): Promise<void> {
+
+  const [contributorId, fundIdx, amount] = new Types.Crowdloan.ContributedEvent(event).params
+  const amtValue = amount.toNumber()
+
+  const contribution = await store.find(Models.Contribution, 
+  {
+    where: `${block.height}-${event.id}`,
+    take: 1
+  })
+
+  let api = await service()
+  const parachain = (await api.query.registrar.paras(fundIdx)).toJSON();
+
+  contribution[0].account = contributorId.toHex()
+  contribution[0].fund.id = fundIdx.toString()
+  contribution[0].parachain.id = parachain.id
+  contribution[0].amount = new BN(amtValue)
+  contribution[0].createdAt = new Date(block.timestamp)
+  contribution[0].blockNum = block.height
+
+  await store.save(contribution);
+};
+
+export async function handleCrowdloanDissolved({
+  store,
+  event,
+  block,
+}: EventContext & StoreContext): Promise<void> {
+  const [fundId] = new Types.Crowdloan.DissolvedEvent(event).params
+
+  const crowdloan = await store.find(Models.Crowdloan, {where: fundId.toString(), take: 1})
+
+  crowdloan[0].status = 'Dissolved'
+  crowdloan[0].isFinished = true
+  crowdloan[0].updatedAt = new Date(block.timestamp)
+  crowdloan[0].dissolvedBlock = block.height
+
+  await store.save(crowdloan);
+};
+
+export async function handleNewLeasePeriod({
+  store,
+  event,
+  block,
+}: EventContext & StoreContext): Promise<void> {
+  const [leaseIdx] = new Types.Slots.NewLeasePeriodEvent(event).params;
+  let api = await service();
+  const leasePeriod = api.consts.slots.leasePeriod.toJSON() as number;
+
+  let chronicle = await getOrCreate(store, Models.Chronicle, 'ChronicleKey')
+
+  chronicle.curLease = leaseIdx.toNumber();
+  chronicle.curLeaseStart = block.timestamp;
+  chronicle.curLeaseEnd = block.timestamp + leasePeriod - 1
+
+  await store.save(chronicle)
+};
+
+export async function handleLeasedSlot({
+  store,
+  event,
+  block,
+}: EventContext & StoreContext): Promise<void> {
+  
+};
+
+const isFundAddress = async (address: string) => {
+  let api = await service();
+  const hexStr = api.createType('Address', address).toHex();
+  return Buffer.from(hexStr.slice(4, 28), 'hex').toString().startsWith('modlpy/cfund');
+};
+
+const getLatestCrowdloanId = async (parachainId: string, store: DatabaseManager) => {
+
+  const sequence = await store.get(Models.CrowdloanSequence,{
+    where: { parachainId }
+  })
+  let api = await service();
+  const curBlockNum = await api.query.system.number();
+  if (sequence) {
+    const crowdloanIdx = sequence.curIndex;
+    const isReCreateCrowdloan = await getIsReCreateCrowdloan(`${parachainId}-${crowdloanIdx}`, store);
+    let curIdex = crowdloanIdx;
+    if (isReCreateCrowdloan) {
+      curIdex = crowdloanIdx + 1;
+      sequence.curIndex = curIdex;
+      sequence.blockNum = curBlockNum.toNumber();
+      await store.save(sequence);
+    }
+    return `${parachainId}-${curIdex}`;
+  }
+  else {
+    let sequence = await getOrCreate(store, Models.CrowdloanSequence, parachainId)
+    sequence.id = parachainId
+    sequence.curIndex = 0
+    sequence.createdAt = new Date()
+    sequence.blockNum = curBlockNum
+    await store.save(sequence)
+  }
+  return `${parachainId}-0`;
+};
+
+const getIsReCreateCrowdloan = async (fundId: string, store: DatabaseManager): Promise<Boolean> => {
+  const fund = await store.find(Models.Crowdloan, {
+    where: {
+        id: fundId,
+    },
+    take: 1
+  })
+  const isReCreateCrowdloan = !!(
+    fund[0]?.dissolvedBlock &&
+    fund[0]?.status === 'Dissolved' &&
+    fund[0]?.isFinished
+  );
+  return isReCreateCrowdloan;
 };
 
 async function getOrCreate<T extends {id: string}>(
