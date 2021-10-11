@@ -76,7 +76,7 @@ type ParachainLeases @entity {
   lastLease: Int!
   latestBidAmount: BigInt!
   auction: Auction 
-  activeForAuction: String  #auctionId or 'sudo'
+  activeForAuction: String  #auctionId
   winningAmount: BigInt
   extraAmount: BigInt
   wonBidFrom: String
